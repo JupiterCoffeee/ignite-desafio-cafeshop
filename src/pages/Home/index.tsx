@@ -4,7 +4,9 @@ import {
     HeroTitleContainer,
     HeroFeaturesDiv,
     HeroTitleDiv,
-    HomeContainer 
+    HomeContainer, 
+    MenuContainer,
+    MenuContent
 } from "./style";
 
 import { 
@@ -15,6 +17,8 @@ import {
 } from "phosphor-react";
 
 import Background from '../../assets/hero-background.png'
+import { data } from "./CoffeeCard/data";
+import { CoffeeCard } from "./CoffeeCard";
 
 
 export function Home() {
@@ -49,6 +53,27 @@ export function Home() {
                     <img src={Background} alt="Copo de café com fundo amarelo" />
                 </div>
             </HeroContainer>
+            <MenuContainer>
+                <div>
+                    <h2>Nossos cafés</h2>
+                </div>
+                <MenuContent>
+                    {
+                        data.map(item => {
+                            return (
+                                <CoffeeCard 
+                                    key={item.id} 
+                                    title={item.title} 
+                                    description={item.description}
+                                    tag={item.tag} 
+                                    banner={item.banner}
+                                    price={item.price} 
+                                /> 
+                            )
+                        })
+                    }
+                </MenuContent>
+            </MenuContainer> 
         </HomeContainer>
     )
 }

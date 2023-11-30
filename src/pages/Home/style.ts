@@ -67,3 +67,17 @@ export const Feature = styled.span<BackgroundProps>`
     background-color: ${(props) => props.theme.color[BACKGROUND_COLORS[props.backgroundColor]]};
     color: ${props => props.theme.color['white']};
 `;
+
+export const MenuContainer = styled.div`
+
+    h2 {
+        font: ${props => props.theme.font['title-l']}
+    }
+
+`;
+
+export const MenuContent = styled.div`
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem 0;
+`;
