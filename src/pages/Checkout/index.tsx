@@ -7,71 +7,85 @@ import {
 from "phosphor-react";
 
 import { 
+    CardPriceContainer,
     CartContainerForm, 
     CheckoutContainer, 
     CheckoutForm, 
     CheckoutFormInputDiv, 
     CheckoutFormTitleDiv, 
-    PaymentForm, 
+    PaymentForm,
+    PaymentFormCheckboxDiv,
+    PaymentFormTitleDiv, 
 } from "./style";
+
+import { CoffeeCard } from "./CoffeeCard";
+import Expresso from '../../assets/Expresso.png'
 
 export function Checkout() {
     return (
         <CheckoutContainer>
             <div>
                 <h1>Complete seu pedido</h1>
-                    <CheckoutForm action="">
-                        <CheckoutFormTitleDiv>
-                            <span><MapPinLine /></span>
-                            <div>
-                                <h2>Endereço de Entrega</h2>
-                                <p>Informe o endereço onde deseja receber seu pedido</p>
-                            </div>
-                        </CheckoutFormTitleDiv>
-
-                        <CheckoutFormInputDiv>
-                            <input type="number" name="" id="" placeholder="CEP"/>
-                            <input type="text" name="" id="" placeholder="Rua"/>
-
-                            <div>
-                                <input type="number" name="" id="" placeholder="Número"/>
-                                <input type="text" name="" id="" placeholder="Complemento"/>
-                            </div>
-
-                            <div>
-                                <input type="text" name="" id="" placeholder="Bairro"/>
-                                <input type="text" name="" id="" placeholder="Cidade"/>
-                                <input type="number" name="" id="" placeholder="UF"/>
-                            </div>
-                        </CheckoutFormInputDiv>
-                    </CheckoutForm>
+                <CheckoutForm action="">
+                    <CheckoutFormTitleDiv>
+                        <span><MapPinLine /></span>
+                        <div>
+                            <h2>Endereço de Entrega</h2>
+                            <p>Informe o endereço onde deseja receber seu pedido</p>
+                        </div>
+                    </CheckoutFormTitleDiv>
+                    <CheckoutFormInputDiv>
+                        <input type="number" name="" id="" placeholder="CEP"/>
+                        <input type="text" name="" id="" placeholder="Rua"/>
+                        <div>
+                            <input type="number" name="" id="" placeholder="Número"/>
+                            <input type="text" name="" id="" placeholder="Complemento"/>
+                        </div>
+                        <div>
+                            <input type="text" name="" id="" placeholder="Bairro"/>
+                            <input type="text" name="" id="" placeholder="Cidade"/>
+                            <input type="number" name="" id="" placeholder="UF"/>
+                        </div>
+                    </CheckoutFormInputDiv>
+                </CheckoutForm>
                 
                 <PaymentForm action="">
+                    <PaymentFormTitleDiv>
+                        <span><CurrencyDollar /></span>
                         <div>
-                            <span><CurrencyDollar /></span>
-                            <div>
-                                <h2>Pagamento</h2>
-                                <p>O pagamento é feito na entrega. Escolha a forma que deseja pagar</p>
-                            </div>
+                            <h2>Pagamento</h2>
+                            <p>O pagamento é feito na entrega. Escolha a forma que deseja pagar</p>
                         </div>
-
+                    </PaymentFormTitleDiv>
+                    <PaymentFormCheckboxDiv>
                         <div>
-                            <input type="checkbox" name="" id="" placeholder={<CreditCard /> + `CARTÃO DE CRÉDITO`}/>
-                            <input type="checkbox" name="" id="" placeholder={<Bank /> + `CARTÃO DE CRÉDITO`}/>
-                            <input type="checkbox" name="" id="" placeholder={<Money /> + `CARTÃO DE CRÉDITO`}/>
+                            <CreditCard />
+                            <label>CARTÃO DE CRÉDITO</label>
                         </div>
-                    </PaymentForm>
+                        <div>
+                            <Bank /> 
+                            <label>CARTÃO DE DÉBITO</label>
+                        </div>
+                        <div>
+                            <Money />
+                            <label>DINHEIRO</label>
+                        </div>
+                    </PaymentFormCheckboxDiv>
+                </PaymentForm>
             </div>
             
             <div>
-                <h1>Complete seu pedido</h1>
+                <h1>Cafés selecionados</h1>
                 <CartContainerForm>
-                    <h1>Cafés selecionados</h1>
                     <div>
-
+                        <CoffeeCard 
+                            title="Expresso Tradicional"
+                            banner={Expresso}
+                            price="9,90"
+                        />
                     </div>
 
-                    <div>
+                    <CardPriceContainer>
                         <div>
                             <p>Total de itens</p>
                             <p>R${}</p>
@@ -85,10 +99,9 @@ export function Checkout() {
                             <span>R${}</span>
                         </div>
                         <button type="submit">CONFIMAR PEDIDO</button>
-                    </div>
+                    </CardPriceContainer>
                 </CartContainerForm>
             </div>
         </CheckoutContainer>
-
     )
 }
