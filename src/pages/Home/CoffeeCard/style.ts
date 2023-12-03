@@ -109,10 +109,14 @@ export const CheckoutButton = styled.button`
     border-radius: 0.375rem;
     border: none;
     color: ${props => props.theme.color['white']};
-    background-color: ${props => props.theme.color['purple-500']};
+    background-color: ${props => props.theme.color['purple-700']};
     
     &:hover {
         cursor: pointer;
+    }
+
+    &:active {
+        background-color: ${props => props.theme.color['purple-500']}; 
     }
 
     svg {

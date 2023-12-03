@@ -1,4 +1,7 @@
+import { useState } from 'react'
+
 import { Minus, Plus, ShoppingCartSimple } from "phosphor-react"
+
 import { 
     CheckoutButton,
     CoffeeCardContainer, 
@@ -17,6 +20,28 @@ export interface CoffeeCardProps {
 }
 
 export function CoffeeCard({ title, description, banner, tag, price }: CoffeeCardProps) {
+    const [ coffeeAmount, setCoffeeAmount] = useState(0);
+
+    function handleMoreCoffeeAmount() {
+        setCoffeeAmount((state) => {
+            if (state >= 10) {
+                return state
+            } else {
+                return state + 1
+            }
+        });
+    }
+
+    function handleLessCoffeeAmount() {
+        setCoffeeAmount((state) => {
+            if (state <= 0) {
+                return state
+            } else {
+                return state -1
+            }
+        });
+    }
+
     return (
         <CoffeeCardContainer>
                 <CoffeeCardTextDiv>
@@ -45,9 +70,9 @@ export function CoffeeCard({ title, description, banner, tag, price }: CoffeeCar
                 <div>
                     <div>
                         <Counter>
-                            <button><Minus /></button>
-                            <p>0</p>
-                            <button><Plus /></button>
+                            <button onClick={handleLessCoffeeAmount}><Minus /></button>
+                            <p>{coffeeAmount}</p>
+                            <button onClick={handleMoreCoffeeAmount}><Plus /></button>
                         </Counter>
                         <div>
                             <CheckoutButton><ShoppingCartSimple weight="fill" /></CheckoutButton>
