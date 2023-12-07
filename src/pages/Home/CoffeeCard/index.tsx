@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { Minus, Plus, ShoppingCartSimple } from "phosphor-react"
 
@@ -12,15 +12,18 @@ import {
 } from "./style"
 
 export interface CoffeeCardProps {
+    id: string
     title: string
     description: string
     banner: string
     tag: ['TRADICIONAL' , 'GELADO' , 'COM LEITE' , 'ALCOÓLICO' , 'ESPECIAL']
     price: string
+    handleNewCoffeeOrder: (data : CoffeeCardProps) => void
+    handleCoffeeAmount: (amount: number) => void
 }
 
-export function CoffeeCard({ title, description, banner, tag, price }: CoffeeCardProps) {
-    const [ coffeeAmount, setCoffeeAmount] = useState(0);
+export function CoffeeCard({ id, title, description, banner, tag, price, handleNewCoffeeOrder, handleCoffeeAmount }: CoffeeCardProps) {
+    const [coffeeAmount, setCoffeeAmount] = useState(0);
 
     function handleMoreCoffeeAmount() {
         setCoffeeAmount((state) => {
@@ -42,6 +45,17 @@ export function CoffeeCard({ title, description, banner, tag, price }: CoffeeCar
         });
     }
 
+    function handleCreateNewCoffeeOrder() {
+        handleNewCoffeeOrder({id, title, description, banner, tag, price, handleNewCoffeeOrder, handleCoffeeAmount})
+        setCoffeeAmount(0)
+    }
+
+    useEffect(() => {
+        handleCoffeeAmount(coffeeAmount)
+    }, [coffeeAmount, handleCoffeeAmount])
+
+    const isCoffeAmountEmpty = coffeeAmount == 0
+
     return (
         <CoffeeCardContainer>
                 <CoffeeCardTextDiv>
@@ -52,7 +66,7 @@ export function CoffeeCard({ title, description, banner, tag, price }: CoffeeCar
                 <TagContainer>
                     {
                         tag.map(item => {
-                            return <span>{item}</span>
+                            return <span key={item}>{item}</span>
                         })
                     }
                 </TagContainer>
@@ -75,7 +89,12 @@ export function CoffeeCard({ title, description, banner, tag, price }: CoffeeCar
                             <button onClick={handleMoreCoffeeAmount}><Plus /></button>
                         </Counter>
                         <div>
-                            <CheckoutButton><ShoppingCartSimple weight="fill" /></CheckoutButton>
+                            <CheckoutButton 
+                                disabled={isCoffeAmountEmpty}
+                                onClick={handleCreateNewCoffeeOrder}
+                            >
+                                <ShoppingCartSimple weight="fill" />
+                            </CheckoutButton>
                         </div>
                     </div>
                 </div>
