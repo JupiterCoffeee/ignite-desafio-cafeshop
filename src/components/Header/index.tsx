@@ -1,9 +1,16 @@
 import { MapPin, ShoppingCartSimple } from 'phosphor-react'
 import Logo from '../../assets/Logo.png'
-import { HeaderContainer } from './styles'
+import { CoffeeOrderList, HeaderContainer } from './styles'
 import { NavLink } from "react-router-dom";
+import { CoffeeOrderContext } from '../../contexts/CoffeeOrderContext';
+import { useContext } from "react"
 
 export function Header() {
+    const {coffeeOrderList} = useContext(CoffeeOrderContext)
+
+    const coffeeOrderListAmount = coffeeOrderList.length
+    const isCoffeeOrderListEmpty = coffeeOrderListAmount
+
     return (
         <HeaderContainer>
             <nav>
@@ -22,6 +29,11 @@ export function Header() {
                             <ShoppingCartSimple weight='fill'/>
                         </NavLink>
                     </button>
+                        { isCoffeeOrderListEmpty ? 
+                            (<CoffeeOrderList>{coffeeOrderListAmount}</CoffeeOrderList>)
+                            :
+                            (<></>)
+                        }
                 </div>
             </nav>
         </HeaderContainer>
