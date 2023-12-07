@@ -119,6 +119,11 @@ export const CheckoutButton = styled.button`
         background-color: ${props => props.theme.color['purple-500']}; 
     }
 
+    &:disabled {
+        opacity: 0.8;
+        cursor: not-allowed;
+    }
+
     svg {
         width: 1.375rem;
         height: 1.375rem;
