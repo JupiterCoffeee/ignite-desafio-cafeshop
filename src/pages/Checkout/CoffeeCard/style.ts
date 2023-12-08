@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const CardContainer = styled.div`
     display: flex;
     width: 100%;
-    padding: 0.5rem 0.25rem;
+    padding: 1.5rem 0.25rem;
     justify-content: space-between;
     align-items: flex-start;
     border-bottom: 1px solid ${props => props.theme.color['gray-400']};
