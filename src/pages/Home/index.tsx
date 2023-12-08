@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { 
     HomeContainer, 
     MenuContainer,
@@ -11,25 +9,24 @@ import { data } from "./CoffeeCard/data";
 import { CoffeeCard, CoffeeCardProps } from "./CoffeeCard";
 import { useContext } from "react";
 import { HeroSection } from "./HeroSection";
-import { CoffeeOrderContext } from "../../contexts/CoffeeOrderContext";
-
-interface CoffeeOrder {
-    id: string;
-    type: string;
-    amount: number;
-}
+import { CoffeeOrder, CoffeeOrderContext } from "../../contexts/CoffeeOrderContext";
 
 export function Home() {
-    const {coffeeOrderList, setCoffeeOrderList} = useContext(CoffeeOrderContext)
-    const [coffeeAmount, setCoffeeAmount] = useState(0);
+    const {
+        coffeeOrderList, 
+        setCoffeeOrderList,
+        coffeeAmount,
+        setCoffeeAmount
+} = useContext(CoffeeOrderContext)
 
     function handleNewCoffeeOrder(data: CoffeeCardProps) {
         const newCoffeeOrder: CoffeeOrder = {
             id: String(data.id),
             type: data.title,
-            amount: coffeeAmount
+            banner: data.banner,
+            amount: coffeeAmount,
+            price: Number((coffeeAmount * 9.90).toFixed(2))
         }
-        event?.preventDefault();
         setCoffeeOrderList((state) => [...state, newCoffeeOrder])
         console.log(coffeeOrderList)
     }
@@ -55,7 +52,6 @@ export function Home() {
                                     price={item.price}
                                     handleNewCoffeeOrder={handleNewCoffeeOrder}
                                     handleCoffeeAmount={setCoffeeAmount} 
-                                    amount={coffeeAmount}
                                 /> 
                             )
                         })

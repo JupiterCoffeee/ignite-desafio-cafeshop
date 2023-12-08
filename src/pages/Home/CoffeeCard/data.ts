@@ -22,7 +22,7 @@ export const data = [
         tag: [
             'TRADICIONAL',
         ],
-        price: '9.90',
+        price: 9.90,
         amount: 0
     },
     {
@@ -33,7 +33,7 @@ export const data = [
         tag: [
             'TRADICIONAL',
         ],
-        price: '9.90'
+        price: 9.90
     },
     {
         id: '3',
@@ -43,7 +43,7 @@ export const data = [
         tag: [
             'TRADICIONAL',
         ],
-        price: '9.90'
+        price: 9.90
     },
     {
         id: '4',
@@ -54,7 +54,7 @@ export const data = [
             'TRADICIONAL',
             'GELADO'
         ],
-        price: '9.90'
+        price: 9.90
     },
     {
         id: '5',
@@ -65,7 +65,7 @@ export const data = [
             'TRADICIONAL',
             'COM LEITE'
         ],
-        price: '9.90'
+        price: 9.90
     },
     {
         id: '6',
@@ -76,7 +76,7 @@ export const data = [
             'TRADICIONAL',
             'COM LEITE'
         ],
-        price: '9.90'
+        price: 9.90
     },
     {
         id: '7',
@@ -87,7 +87,7 @@ export const data = [
             'TRADICIONAL',
             'COM LEITE'
         ],
-        price: '9.90'
+        price: 9.90
     },
     {
         id: '8',
@@ -98,7 +98,7 @@ export const data = [
             'TRADICIONAL',
             'COM LEITE'
         ],
-        price: '9.90'
+        price: 9.90
     },
     {
         id: '9',
@@ -109,7 +109,7 @@ export const data = [
             'TRADICIONAL',
             'COM LEITE'
         ],
-        price: '9.90'
+        price: 9.90
     },
     {
         id: '10',
@@ -120,7 +120,7 @@ export const data = [
             'ESPECIAL',
             'COM LEITE'
         ],
-        price: '9.90'
+        price: 9.90
     },
     {
         id: '11',
@@ -132,7 +132,7 @@ export const data = [
             'ALCOÓLICO',
             'GELADO',
         ],
-        price: '9.90'
+        price: 9.90
     },
     {
         id: '12',
@@ -142,7 +142,7 @@ export const data = [
         tag: [
             'ESPECIAL',
         ],
-        price: '9.90'
+        price: 9.90
     },
     {
         id: '13',
@@ -152,7 +152,7 @@ export const data = [
         tag: [
             'ESPECIAL',
         ],
-        price: '9.90'
+        price: 9.90
     },
     {
         id: '14',
@@ -163,6 +163,6 @@ export const data = [
             'ESPECIAL',
             'ALCOÓLICO',
         ],
-        price: '9.90'
+        price: 9.90
     },
 ]

@@ -17,7 +17,7 @@ export interface CoffeeCardProps {
     description: string
     banner: string
     tag: ['TRADICIONAL' , 'GELADO' , 'COM LEITE' , 'ALCOÓLICO' , 'ESPECIAL']
-    price: string
+    price: number
     handleNewCoffeeOrder: (data : CoffeeCardProps) => void
     handleCoffeeAmount: (amount: number) => void
 }
@@ -79,7 +79,7 @@ export function CoffeeCard({ id, title, description, banner, tag, price, handleN
             <CoffeeCardPriceDiv>
                 <div>
                     <small>R$</small>
-                    <span>{price}</span>
+                    <span>{price.toFixed(2)}</span>
                 </div>
                 <div>
                     <div>
