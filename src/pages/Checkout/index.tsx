@@ -1,102 +1,79 @@
-import { 
-    Bank, 
-    CreditCard, 
-    CurrencyDollar, 
-    MapPinLine, 
-    Money } 
-from "phosphor-react";
+import { useContext, useEffect, useState } from "react"
 
 import { 
     CardPriceContainer,
     CartContainerForm, 
     CheckoutContainer, 
-    CheckoutForm, 
-    CheckoutFormInputDiv, 
-    CheckoutFormTitleDiv, 
-    PaymentForm,
-    PaymentFormCheckboxDiv,
-    PaymentFormTitleDiv, 
 } from "./style";
 
 import { CoffeeCard } from "./CoffeeCard";
-import Expresso from '../../assets/Expresso.png'
+import { CheckoutFormComponent } from "./CheckoutFormComponent";
+import { CoffeeOrderContext } from "../../contexts/CoffeeOrderContext";
 
 export function Checkout() {
+    const {coffeeOrderList, coffeeAmount, setCoffeeAmount} = useContext(CoffeeOrderContext)
+    const [finalPrice, setFinalPrice] = useState(0)
+
+    const isCartEmpty = coffeeOrderList.length == 0
+
+    useEffect(() => {
+        const orderItemsValues = coffeeOrderList.map((item) => {
+            return item.price
+        })
+
+        const orderItemsAmount = coffeeOrderList.map((item) => {
+            return item.amount
+        })
+    
+        const orderFinalPriceSum = orderItemsValues.reduce((accumulator, value) => {
+            return accumulator + value;
+        }, 0)
+
+        const orderFinalPrice = Number(((orderFinalPriceSum + 3.50) - coffeeOrderList.length).toFixed(2))
+
+        const calcNewFinalPrice = Number(orderItemsValues) / Number(orderItemsAmount) /*novo calc toda vez que o amount for alterado*/
+    
+        console.log(calcNewFinalPrice)
+        console.log(orderItemsAmount) /* Descobrir um método para alterar o amount*/ 
+        setFinalPrice(orderFinalPrice) /* Recaucular o valor a partir do novo amount*/
+        console.log(coffeeOrderList)
+
+    }, [coffeeOrderList, coffeeAmount, setCoffeeAmount])
+
     return (
         <CheckoutContainer>
-            <div>
-                <h1>Complete seu pedido</h1>
-                <CheckoutForm action="">
-                    <CheckoutFormTitleDiv>
-                        <span><MapPinLine /></span>
-                        <div>
-                            <h2>Endereço de Entrega</h2>
-                            <p>Informe o endereço onde deseja receber seu pedido</p>
-                        </div>
-                    </CheckoutFormTitleDiv>
-                    <CheckoutFormInputDiv>
-                        <input type="number" name="" id="" placeholder="CEP"/>
-                        <input type="text" name="" id="" placeholder="Rua"/>
-                        <div>
-                            <input type="number" name="" id="" placeholder="Número"/>
-                            <input type="text" name="" id="" placeholder="Complemento"/>
-                        </div>
-                        <div>
-                            <input type="text" name="" id="" placeholder="Bairro"/>
-                            <input type="text" name="" id="" placeholder="Cidade"/>
-                            <input type="number" name="" id="" placeholder="UF"/>
-                        </div>
-                    </CheckoutFormInputDiv>
-                </CheckoutForm>
-                
-                <PaymentForm action="">
-                    <PaymentFormTitleDiv>
-                        <span><CurrencyDollar /></span>
-                        <div>
-                            <h2>Pagamento</h2>
-                            <p>O pagamento é feito na entrega. Escolha a forma que deseja pagar</p>
-                        </div>
-                    </PaymentFormTitleDiv>
-                    <PaymentFormCheckboxDiv>
-                        <div>
-                            <CreditCard />
-                            <label>CARTÃO DE CRÉDITO</label>
-                        </div>
-                        <div>
-                            <Bank /> 
-                            <label>CARTÃO DE DÉBITO</label>
-                        </div>
-                        <div>
-                            <Money />
-                            <label>DINHEIRO</label>
-                        </div>
-                    </PaymentFormCheckboxDiv>
-                </PaymentForm>
-            </div>
-            
+            <CheckoutFormComponent />
             <div>
                 <h1>Cafés selecionados</h1>
                 <CartContainerForm>
                     <div>
-                        <CoffeeCard 
-                            title="Expresso Tradicional"
-                            banner={Expresso}
-                            price="9,90"
-                        />
+                        {
+                            coffeeOrderList.map(item => {
+                                return (
+                                    <CoffeeCard
+                                        key={item.id} 
+                                        title={item.type}
+                                        banner={item.banner}
+                                        price={Number((item.price).toFixed(2))}
+                                        amount={item.amount}
+                                        handleCoffeeAmount={setCoffeeAmount}
+                                    />
+                                )
+                            })
+                        }
                     </div>
-
                     <CardPriceContainer>
                         <div>
                             <p>Total de itens</p>
-                            <p>R${}</p>
+                            <p>R${finalPrice.toFixed(2)}</p>
                         </div>
                         <div>
                             <p>Entrega</p>
-                            <p>R${}</p>
+                            <p>R${"3,50"}</p>
                         </div>
                         <div>
                             <span>Total</span>
-                            <span>R${}</span>
+                            <span>R${isCartEmpty ? "0.00" : finalPrice.toFixed(2)}</span>
                         </div>
                         <button type="submit">CONFIMAR PEDIDO</button>
                     </CardPriceContainer>
@@ -105,3 +82,4 @@ export function Checkout() {
         </CheckoutContainer>
     )
 }
+
