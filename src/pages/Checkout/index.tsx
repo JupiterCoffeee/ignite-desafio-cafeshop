@@ -20,25 +20,20 @@ export function Checkout() {
         const orderItemsValues = coffeeOrderList.map((item) => {
             return item.price
         })
-
-        const orderItemsAmount = coffeeOrderList.map((item) => {
-            return item.amount
-        })
     
         const orderFinalPriceSum = orderItemsValues.reduce((accumulator, value) => {
-            return accumulator + value;
+            return (accumulator + value);
         }, 0)
 
-        const orderFinalPrice = Number(((orderFinalPriceSum + 3.50) - coffeeOrderList.length).toFixed(2))
-
-        const calcNewFinalPrice = Number(orderItemsValues) / Number(orderItemsAmount) /*novo calc toda vez que o amount for alterado*/
+        const orderFinalPrice = orderFinalPriceSum + 3.50
     
-        console.log(calcNewFinalPrice)
-        console.log(orderItemsAmount) /* Descobrir um método para alterar o amount*/ 
-        setFinalPrice(orderFinalPrice) /* Recaucular o valor a partir do novo amount*/
+        setFinalPrice(orderFinalPrice) /* Recaucular o valor a partir do novo amount */
         console.log(coffeeOrderList)
+        console.log("Recalculado")
+ 
+    }, [coffeeOrderList, coffeeAmount, setCoffeeAmount]) // Checar eficácioa
 
-    }, [coffeeOrderList, coffeeAmount, setCoffeeAmount])
+    const orderFinalPriceBeforeTaxes = finalPrice - 3.50
 
     return (
         <CheckoutContainer>
@@ -52,6 +47,7 @@ export function Checkout() {
                                 return (
                                     <CoffeeCard
                                         key={item.id} 
+                                        id={item.id}
                                         title={item.type}
                                         banner={item.banner}
                                         price={Number((item.price).toFixed(2))}
@@ -65,7 +61,7 @@ export function Checkout() {
                     <CardPriceContainer>
                         <div>
                             <p>Total de itens</p>
-                            <p>R${finalPrice.toFixed(2)}</p>
+                            <p>R${orderFinalPriceBeforeTaxes.toFixed(2)}</p>
                         </div>
                         <div>
                             <p>Entrega</p>
