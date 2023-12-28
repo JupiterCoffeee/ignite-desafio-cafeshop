@@ -86,22 +86,5 @@ export const PaymentFormCheckboxDiv = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
-    
-    div {
-        display: flex;
-        padding: 1rem;
-        align-items: center;
-        gap: 0.75rem;
 
-        border-radius: 0.375rem;
-        background-color: ${props => props.theme.color['gray-400']};
-
-        label {
-            font: ${props => props.theme.font['buttom-m']};
-        }
-
-        svg {
-            color: ${props => props.theme.color['purple-500']};
-        }
-    }
 `;

@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { 
     Bank, 
     CreditCard, 
@@ -15,7 +17,28 @@ import {
     PaymentFormTitleDiv, 
 } from "./style";
 
+import { PaymentMethodButton } from "./PaymentMethodButton";
+
 export function CheckoutFormComponent() {
+    const paymentMethods = [
+        {
+            title: 'CARTÃO DE CRÉDITO',
+            icon: <CreditCard />,
+        },
+        {
+            title: 'CARTÃO DE DÉBITO',
+            icon: <Bank />,        },
+        {
+            title: 'DINHEIRO',
+            icon: <Money />,        }
+    ]
+
+    const [activePaymentMethod, setActivePaymentMethod] = useState<string | null>(null);
+
+    const handlePaymentMethodSelected = (title: string) => {
+      setActivePaymentMethod(title === activePaymentMethod ? null : title);
+    };
+
     return (
         <div>
             <h1>Complete seu pedido</h1>
@@ -51,18 +74,16 @@ export function CheckoutFormComponent() {
                     </div>
                 </PaymentFormTitleDiv>
                 <PaymentFormCheckboxDiv>
-                    <div>
-                        <CreditCard />
-                        <label>CARTÃO DE CRÉDITO</label>
+                    {paymentMethods.map((item) => (
+                    <div key={item.title} onClick={() => handlePaymentMethodSelected(item.title)}>
+                        <PaymentMethodButton
+                            title={item.title}
+                            icon={item.icon}
+                            onClick={() => handlePaymentMethodSelected(item.title)}
+                            className={activePaymentMethod === item.title ? 'active' : ''}
+                        />
                     </div>
-                    <div>
-                        <Bank /> 
-                        <label>CARTÃO DE DÉBITO</label>
-                    </div>
-                    <div>
-                        <Money />
-                        <label>DINHEIRO</label>
-                    </div>
+                    ))}
                 </PaymentFormCheckboxDiv>
             </PaymentForm>
         </div>
