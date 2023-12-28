@@ -20,16 +20,13 @@ export function CoffeeCard({id, title, banner, price, amount, handleCoffeeAmount
     function handleNewOrderPrice(state: CoffeeCardProps) {
         const updatedOrderList = coffeeOrderList.map(order => {
             const updatedPrice = coffeeAmount * 9.9
-
             if (order.id === state.id) {
                 return { ...order, amount: coffeeAmount, price: updatedPrice }; // Checar eficácioa
             } else {
                 return order;
             }
         });
-
         setCoffeeOrderList(updatedOrderList)
-        console.log("triggered")
     }
 
     // Atualize o estado global com a nova lista de pedidos
@@ -56,6 +53,11 @@ export function CoffeeCard({id, title, banner, price, amount, handleCoffeeAmount
         });
         
     }
+
+    function handleDeleteOrderItem(itemId: string) {
+        const orderListWithoutDeletedItem = coffeeOrderList.filter(item => item.id !== itemId);
+        setCoffeeOrderList(orderListWithoutDeletedItem);
+    }
     
     useEffect(() => {
         handleCoffeeAmount(coffeeAmount);
@@ -79,7 +81,7 @@ export function CoffeeCard({id, title, banner, price, amount, handleCoffeeAmount
                             <p>{coffeeAmount}</p>
                             <button onClick={handleMoreCoffeeAmount}><Plus /></button>
                         </Counter>
-                        <RemoveButton><Trash /> Remover</RemoveButton>
+                        <RemoveButton onClick={() => handleDeleteOrderItem(id)}><Trash /> Remover</RemoveButton>
                     </CardButtonsDiv>
                 </div>
             </CardTextContainer>
