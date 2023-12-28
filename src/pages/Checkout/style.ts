@@ -55,11 +55,13 @@ export const CardPriceContainer = styled.div`
 
     button {
         display: flex;
+        width: 100%;
         padding: 0.75rem 0.5rem;
         justify-content: center;
         align-items: center;
         gap: 0.25rem;
         align-self: stretch;  
+        cursor: pointer;
         
         border: none;
         border-radius: 0.375rem;
@@ -67,6 +69,11 @@ export const CardPriceContainer = styled.div`
 
         font: ${props => props.theme.font['buttom-g']};
         color: ${props => props.theme.color.white};
+
+        &:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
     }
 
 `;

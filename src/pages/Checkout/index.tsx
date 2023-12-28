@@ -9,6 +9,7 @@ import {
 import { CoffeeCard } from "./CoffeeCard";
 import { CheckoutFormComponent } from "./CheckoutFormComponent";
 import { CoffeeOrderContext } from "../../contexts/CoffeeOrderContext";
+import { Link } from "react-router-dom";
 
 export function Checkout() {
     const {coffeeOrderList, coffeeAmount, setCoffeeAmount} = useContext(CoffeeOrderContext)
@@ -29,7 +30,6 @@ export function Checkout() {
     
         setFinalPrice(orderFinalPrice) /* Recaucular o valor a partir do novo amount */
         console.log(coffeeOrderList)
-        console.log("Recalculado")
  
     }, [coffeeOrderList, coffeeAmount, setCoffeeAmount]) // Checar eficácioa
 
@@ -71,7 +71,9 @@ export function Checkout() {
                             <span>Total</span>
                             <span>R${isCartEmpty ? "0.00" : finalPrice.toFixed(2)}</span>
                         </div>
-                        <button type="submit">CONFIMAR PEDIDO</button>
+                        <Link to="/delivery">
+                            <button type="submit" disabled={isCartEmpty}>CONFIMAR PEDIDO</button>
+                        </Link>
                     </CardPriceContainer>
                 </CartContainerForm>
             </div>
