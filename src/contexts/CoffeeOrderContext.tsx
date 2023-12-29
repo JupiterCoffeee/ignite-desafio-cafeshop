@@ -12,8 +12,15 @@ export interface CoffeeOrder {
     banner: string;
 }
 
+interface Order {
+    addrees: string;
+    paymentMethod: string;
+}
+
 interface CoffeeOrderContextType {
     coffeeOrderList: CoffeeOrder[]
+    order: Order
+    setOrder: React.Dispatch<any>
     setCoffeeOrderList: React.Dispatch<React.SetStateAction<CoffeeOrder[]>>
     coffeeAmount: number;
     setCoffeeAmount: React.Dispatch<React.SetStateAction<number>>
@@ -25,10 +32,13 @@ export function CoffeeOrderContextProvider({
     children,
 }: CoffeeOrderContextProviderProps) {
     const [coffeeOrderList, setCoffeeOrderList] = useState<CoffeeOrder[]>([]);
+    const [order, setOrder] = useState(Object)
     const [coffeeAmount, setCoffeeAmount] = useState(0);
     
     return (
         <CoffeeOrderContext.Provider value={{
+            order,
+            setOrder,
             coffeeOrderList,
             setCoffeeOrderList,
             coffeeAmount,
