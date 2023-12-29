@@ -27,10 +27,12 @@ export function CheckoutFormComponent() {
         },
         {
             title: 'CARTÃO DE DÉBITO',
-            icon: <Bank />,        },
+            icon: <Bank />,        
+        },
         {
             title: 'DINHEIRO',
-            icon: <Money />,        }
+            icon: <Money />,        
+        }
     ]
 
     const [activePaymentMethod, setActivePaymentMethod] = useState<string | null>(null);
@@ -52,7 +54,7 @@ export function CheckoutFormComponent() {
                 </CheckoutFormTitleDiv>
                 <CheckoutFormInputDiv>
                     <input type="number" name="" id="" placeholder="CEP"/>
-                    <input type="text" name="" id="" placeholder="Rua"/>
+                    <input type="text" name="endereco" id="" placeholder="Rua"/>
                     <div>
                         <input type="number" name="" id="" placeholder="Número"/>
                         <input type="text" name="" id="" placeholder="Complemento"/>
