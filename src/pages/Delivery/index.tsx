@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { CoffeeOrderContext } from "../../contexts/CoffeeOrderContext";
+
 import { Clock, CurrencyDollar, MapPin } from "phosphor-react";
 import 
 { 
@@ -11,6 +14,7 @@ import
 import Illustration from '../../assets/Illustration.png'
 
 export function Delivery() {
+    const {order} = useContext(CoffeeOrderContext)
     return (
         <DeliveryContainer>
             <DeliveryTitleDiv>
@@ -22,7 +26,7 @@ export function Delivery() {
                     <Info backgroundColor="purple">
                         <span><MapPin weight="fill"/></span>
                         <div>
-                            <p>Entrega em <strong></strong></p>
+                            <p>Entrega em <strong>{order.address}</strong></p>
                             <p>São Paulo - São Paulo, SP</p>
                         </div>
                     </Info>
@@ -36,8 +40,8 @@ export function Delivery() {
                     <Info backgroundColor="darkYellow">
                         <span><CurrencyDollar weight="fill"/></span>
                         <div>
-                            <p>Entrega em</p>
-                            <strong></strong>
+                            <p>Método de pagamento</p>
+                            <strong>{order.paymentMethod}</strong>
                         </div>
                     </Info>
                 </DeliveryInfoBoxDiv>

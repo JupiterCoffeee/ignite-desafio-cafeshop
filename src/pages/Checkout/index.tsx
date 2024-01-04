@@ -15,8 +15,6 @@ export function Checkout() {
     const {coffeeOrderList, coffeeAmount, setCoffeeAmount} = useContext(CoffeeOrderContext)
     const [finalPrice, setFinalPrice] = useState(0)
 
-    const isCartEmpty = coffeeOrderList.length == 0
-
     useEffect(() => {
         const orderItemsValues = coffeeOrderList.map((item) => {
             return item.price
@@ -34,6 +32,8 @@ export function Checkout() {
     }, [coffeeOrderList, coffeeAmount, setCoffeeAmount]) // Checar eficácioa
 
     const orderFinalPriceBeforeTaxes = finalPrice - 3.50
+
+    const isCartEmpty = coffeeOrderList.length == 0
 
     return (
         <CheckoutContainer>

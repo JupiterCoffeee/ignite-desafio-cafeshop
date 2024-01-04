@@ -13,7 +13,7 @@ export interface CoffeeOrder {
 }
 
 interface Order {
-    addrees: string;
+    address: string;
     paymentMethod: string;
 }
 

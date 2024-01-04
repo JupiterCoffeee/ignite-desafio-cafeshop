@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
+import { CoffeeOrderContext } from "../../../contexts/CoffeeOrderContext";
 
 import { 
     Bank, 
@@ -20,6 +21,8 @@ import {
 import { PaymentMethodButton } from "./PaymentMethodButton";
 
 export function CheckoutFormComponent() {
+    const {order, setOrder} = useContext(CoffeeOrderContext)
+
     const paymentMethods = [
         {
             title: 'CARTÃO DE CRÉDITO',
@@ -41,6 +44,12 @@ export function CheckoutFormComponent() {
       setActivePaymentMethod(title === activePaymentMethod ? null : title);
     };
 
+    function handleNewOrderDeliveryChange(event: ChangeEvent<HTMLInputElement>) {
+        event?.target.setCustomValidity('')
+        setOrder({address: event?.target.value, paymentMethod: activePaymentMethod});
+        console.log(order)
+    }
+
     return (
         <div>
             <h1>Complete seu pedido</h1>
@@ -54,7 +63,13 @@ export function CheckoutFormComponent() {
                 </CheckoutFormTitleDiv>
                 <CheckoutFormInputDiv>
                     <input type="number" name="" id="" placeholder="CEP"/>
-                    <input type="text" name="endereco" id="" placeholder="Rua"/>
+                    <input 
+                        type="text" 
+                        name="address" 
+                        id="" 
+                        placeholder="Rua"
+                        onChange={handleNewOrderDeliveryChange}
+                    />
                     <div>
                         <input type="number" name="" id="" placeholder="Número"/>
                         <input type="text" name="" id="" placeholder="Complemento"/>
@@ -66,7 +81,7 @@ export function CheckoutFormComponent() {
                     </div>
                 </CheckoutFormInputDiv>
             </CheckoutForm>
-            
+  
             <PaymentForm action="">
                 <PaymentFormTitleDiv>
                     <span><CurrencyDollar /></span>
