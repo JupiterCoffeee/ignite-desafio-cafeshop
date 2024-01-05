@@ -6,8 +6,8 @@ import {
     CreditCard, 
     CurrencyDollar, 
     MapPinLine, 
-    Money } 
-from "phosphor-react";
+    Money 
+} from "phosphor-react";
 
 import { 
     CheckoutForm, 
@@ -21,8 +21,9 @@ import {
 import { PaymentMethodButton } from "./PaymentMethodButton";
 
 export function CheckoutFormComponent() {
-    const {order, setOrder} = useContext(CoffeeOrderContext)
+    const { setOrder } = useContext(CoffeeOrderContext);
 
+    // List of available payment methods
     const paymentMethods = [
         {
             title: 'CARTÃO DE CRÉDITO',
@@ -36,19 +37,21 @@ export function CheckoutFormComponent() {
             title: 'DINHEIRO',
             icon: <Money />,        
         }
-    ]
+    ];
 
+    // State to track the active payment method
     const [activePaymentMethod, setActivePaymentMethod] = useState<string | null>(null);
 
+    // Function to handle the selection of a payment method
     const handlePaymentMethodSelected = (title: string) => {
       setActivePaymentMethod(title === activePaymentMethod ? null : title);
     };
 
-    function handleNewOrderDeliveryChange(event: ChangeEvent<HTMLInputElement>) {
-        event?.target.setCustomValidity('')
-        setOrder({address: event?.target.value, paymentMethod: activePaymentMethod});
-        console.log(order)
-    }
+    // Function to handle changes in the delivery address
+    const handleNewOrderDeliveryChange = (event: ChangeEvent<HTMLInputElement>) => {
+        event?.target.setCustomValidity('');
+        setOrder({ address: event?.target.value, paymentMethod: activePaymentMethod });
+    };
 
     return (
         <div>
@@ -58,7 +61,7 @@ export function CheckoutFormComponent() {
                     <span><MapPinLine /></span>
                     <div>
                         <h2>Endereço de Entrega</h2>
-                        <p>Informe o endereço onde deseja receber seu pedido</p>
+                        <p>Insira o endereço de entrega desejado</p>
                     </div>
                 </CheckoutFormTitleDiv>
                 <CheckoutFormInputDiv>
@@ -104,5 +107,5 @@ export function CheckoutFormComponent() {
                 </PaymentFormCheckboxDiv>
             </PaymentForm>
         </div>
-    )
+    );
 }

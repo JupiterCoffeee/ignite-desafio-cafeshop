@@ -1,7 +1,5 @@
-import { useState, useEffect } from 'react'
-
-import { Minus, Plus, ShoppingCartSimple } from "phosphor-react"
-
+import { useState, useEffect } from 'react';
+import { Minus, Plus, ShoppingCartSimple } from "phosphor-react";
 import { 
     CheckoutButton,
     CoffeeCardContainer, 
@@ -9,68 +7,79 @@ import {
     CoffeeCardTextDiv, 
     Counter,
     TagContainer
-} from "./style"
+} from "./style";
 
+// Define the props for the CoffeeCard component
 export interface CoffeeCardProps {
-    id: string
-    title: string
-    description: string
-    banner: string
-    tag: ['TRADICIONAL' , 'GELADO' , 'COM LEITE' , 'ALCOÓLICO' , 'ESPECIAL']
-    price: number
-    handleNewCoffeeOrder: (data : CoffeeCardProps) => void
-    handleCoffeeAmount: (amount: number) => void
+    id: string;
+    title: string;
+    description: string;
+    banner: string;
+    tag: string[];
+    price: number;
+    handleNewCoffeeOrder: (data: CoffeeCardProps) => void;
+    handleCoffeeAmount: (amount: number) => void;
 }
 
-export function CoffeeCard({ id, title, description, banner, tag, price, handleNewCoffeeOrder, handleCoffeeAmount }: CoffeeCardProps) {
+// Optimized CoffeeCard component
+export function CoffeeCard({ 
+    id, 
+    title, 
+    description, 
+    banner, 
+    tag, 
+    price, 
+    handleNewCoffeeOrder, 
+    handleCoffeeAmount 
+}: CoffeeCardProps) {
+    // State to manage the selected coffee quantity
     const [coffeeAmount, setCoffeeAmount] = useState(0);
 
-    function handleMoreCoffeeAmount() {
-        setCoffeeAmount((state) => {
-            if (state >= 10) {
-                return state
-            } else {
-                return state + 1
-            }
+    // Function to increase the coffee quantity
+    const handleMoreCoffeeAmount = () => {
+        setCoffeeAmount((state) => Math.min(10, state + 1));
+    };
+
+    // Function to decrease the coffee quantity
+    const handleLessCoffeeAmount = () => {
+        setCoffeeAmount((state) => Math.max(0, state - 1));
+    };
+
+    // Function to create a new coffee order
+    const handleCreateNewCoffeeOrder = () => {
+        handleNewCoffeeOrder({
+            id,
+            title,
+            description,
+            banner,
+            tag,
+            price,
+            handleCoffeeAmount,
+            handleNewCoffeeOrder
         });
-    }
+        setCoffeeAmount(0);
+    };
 
-    function handleLessCoffeeAmount() {
-        setCoffeeAmount((state) => {
-            if (state <= 0) {
-                return state
-            } else {
-                return state -1
-            }
-        });
-    }
-
-    function handleCreateNewCoffeeOrder() {
-        handleNewCoffeeOrder({id, title, description, banner, tag, price, handleNewCoffeeOrder, handleCoffeeAmount})
-        setCoffeeAmount(0)
-    }
-
+    // Effect to update the coffee quantity when it changes
     useEffect(() => {
-        handleCoffeeAmount(coffeeAmount)
-    }, [coffeeAmount, handleCoffeeAmount])
+        handleCoffeeAmount(coffeeAmount);
+    }, [coffeeAmount, handleCoffeeAmount]);
 
-    const isCoffeAmountEmpty = coffeeAmount == 0
+    // Check if the coffee quantity is empty
+    const isCoffeeAmountEmpty = coffeeAmount === 0;
 
     return (
         <CoffeeCardContainer>
-                <CoffeeCardTextDiv>
+            <CoffeeCardTextDiv>
                 <div>
-                    <img src={banner} />
+                    <img src={banner} alt={`Coffee ${title}`} />
                 </div>
-
                 <TagContainer>
-                    {
-                        tag.map(item => {
-                            return <span key={item}>{item}</span>
-                        })
-                    }
+                    {/* Render each tag */}
+                    {tag.map((item) => (
+                        <span key={item}>{item}</span>
+                    ))}
                 </TagContainer>
-
                 <div>
                     <h3>{title}</h3>
                     <p>{description}</p>
@@ -90,7 +99,7 @@ export function CoffeeCard({ id, title, description, banner, tag, price, handleN
                         </Counter>
                         <div>
                             <CheckoutButton 
-                                disabled={isCoffeAmountEmpty}
+                                disabled={isCoffeeAmountEmpty}
                                 onClick={handleCreateNewCoffeeOrder}
                             >
                                 <ShoppingCartSimple weight="fill" />
@@ -100,5 +109,5 @@ export function CoffeeCard({ id, title, description, banner, tag, price, handleN
                 </div>
             </CoffeeCardPriceDiv>
         </CoffeeCardContainer>
-    )
+    );
 }

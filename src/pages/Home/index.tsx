@@ -1,24 +1,24 @@
+import { useContext } from "react";
+import { CoffeeOrder, CoffeeOrderContext } from "../../contexts/CoffeeOrderContext";
+import { data } from "./CoffeeCard/data";
+
 import { 
     HomeContainer, 
     MenuContainer,
     MenuContent
 } from "./style";
 
-
-import { data } from "./CoffeeCard/data";
 import { CoffeeCard, CoffeeCardProps } from "./CoffeeCard";
-import { useContext } from "react";
 import { HeroSection } from "./HeroSection";
-import { CoffeeOrder, CoffeeOrderContext } from "../../contexts/CoffeeOrderContext";
 
 export function Home() {
     const {
-        coffeeOrderList, 
         setCoffeeOrderList,
         coffeeAmount,
         setCoffeeAmount
-} = useContext(CoffeeOrderContext)
+    } = useContext(CoffeeOrderContext)
 
+    // Function to handle creating a new coffee order 
     function handleNewCoffeeOrder(data: CoffeeCardProps) {
         const newCoffeeOrder: CoffeeOrder = {
             id: String(data.id),
@@ -28,7 +28,6 @@ export function Home() {
             price: Number((coffeeAmount * 9.90).toFixed(2))
         }
         setCoffeeOrderList((state) => [...state, newCoffeeOrder])
-        console.log(coffeeOrderList)
     }
     
     return (

@@ -1,77 +1,64 @@
-import { Minus, Plus, Trash } from "phosphor-react"
-import { CardButtonsDiv, CardContainer, CardPriceContainer, CardTextContainer, Counter, RemoveButton } from "./style"
-import { useContext, useEffect, useState } from "react"
-import { CoffeeOrderContext } from "../../../contexts/CoffeeOrderContext"
+import { useContext, useEffect, useState } from "react";
+import { CoffeeOrderContext } from "../../../contexts/CoffeeOrderContext";
 
+import { Minus, Plus, Trash } from "phosphor-react";
+import { CardButtonsDiv, CardContainer, CardPriceContainer, CardTextContainer, Counter, RemoveButton } from "./style";
 export interface CoffeeCardProps {
-    id: string
-    title: string
-    banner: string
-    price: number
-    amount: number
-    handleCoffeeAmount: (amount: number) => void
+    id: string;
+    title: string;
+    banner: string;
+    price: number;
+    amount: number;
+    handleCoffeeAmount: (amount: number) => void;
 }
 
 export function CoffeeCard({id, title, banner, price, amount, handleCoffeeAmount} : CoffeeCardProps) {
-    const {coffeeOrderList, setCoffeeOrderList} = useContext(CoffeeOrderContext)
+    const { coffeeOrderList, setCoffeeOrderList } = useContext(CoffeeOrderContext);
+
+    // Local state for the amount of coffee in this card
     const [coffeeAmount, setCoffeeAmount] = useState(amount);
-    const [orderPrice, setOrderPrice] = useState(price)
 
-    function handleNewOrderPrice(state: CoffeeCardProps) {
-        const updatedOrderList = coffeeOrderList.map(order => {
-            const updatedPrice = coffeeAmount * 9.9
-            if (order.id === state.id) {
-                return { ...order, amount: coffeeAmount, price: updatedPrice }; // Checar eficácioa
-            } else {
-                return order;
-            }
+    // Local state for the calculated price based on the amount
+    const [orderPrice, setOrderPrice] = useState(price);
+
+    // Update the order list with the new price when the amount changes
+    const handleNewOrderPrice = () => {
+        const updatedOrderList = coffeeOrderList.map((order) => {
+            const updatedPrice = coffeeAmount * 9.9;
+            return order.id === id ? { ...order, amount: coffeeAmount, price: updatedPrice } : order;
         });
-        setCoffeeOrderList(updatedOrderList)
-    }
+        setCoffeeOrderList(updatedOrderList);
+    };
 
-    // Atualize o estado global com a nova lista de pedidos
-    // Isso pode depender da implementação específica do seu contexto
-    // Pode ser algo como setCoffeeOrderList(updatedOrderList)
+    // Increase the coffee amount, capped at 10
+    const handleMoreCoffeeAmount = () => {
+        setCoffeeAmount((state) => Math.min(10, state + 1));
+    };
 
-    function handleMoreCoffeeAmount() {
-        setCoffeeAmount((state) => {
-            if (state >= 10) {
-                return state
-            } else {
-                return state + 1
-            }
-        });
-    }
+    // Decrease the coffee amount, capped at 1
+    const handleLessCoffeeAmount = () => {
+        setCoffeeAmount((state) => Math.max(1, state - 1));
+    };
 
-    function handleLessCoffeeAmount() {
-        setCoffeeAmount((state) => {
-            if (state <= 1) {
-                return state
-            } else {
-                return state -1
-            }
-        });
-        
-    }
-
-    function handleDeleteOrderItem(itemId: string) {
-        const orderListWithoutDeletedItem = coffeeOrderList.filter(item => item.id !== itemId);
+    // Remove this item from the order list
+    const handleDeleteOrderItem = () => {
+        const orderListWithoutDeletedItem = coffeeOrderList.filter((item) => item.id !== id);
         setCoffeeOrderList(orderListWithoutDeletedItem);
-    }
-    
+    };
+
+    // Update the global coffee amount and calculated price when the local amount changes
     useEffect(() => {
         handleCoffeeAmount(coffeeAmount);
         setOrderPrice(coffeeAmount * 9.90);
-        handleNewOrderPrice({ id, title, banner, price, amount, handleCoffeeAmount });
-    }, [coffeeAmount, handleCoffeeAmount]); // Checar eficácioa
+        handleNewOrderPrice();
+    }, [coffeeAmount, handleCoffeeAmount]);
 
-
-
+    // Render the coffee card component
     return (
         <CardContainer>
             <CardTextContainer>
                 <div>
-                    <img src={banner}/>
+                    <img src={banner} alt={title} />
                 </div>
                 <div>
                     <p>{title}</p>
@@ -81,7 +68,7 @@ export function CoffeeCard({id, title, banner, price, amount, handleCoffeeAmount
                             <p>{coffeeAmount}</p>
                             <button onClick={handleMoreCoffeeAmount}><Plus /></button>
                         </Counter>
-                        <RemoveButton onClick={() => handleDeleteOrderItem(id)}><Trash /> Remover</RemoveButton>
+                        <RemoveButton onClick={handleDeleteOrderItem}><Trash /> Remover</RemoveButton>
                     </CardButtonsDiv>
                 </div>
             </CardTextContainer>
@@ -89,5 +76,5 @@ export function CoffeeCard({id, title, banner, price, amount, handleCoffeeAmount
                 <span>R${orderPrice.toFixed(2)}</span>
             </CardPriceContainer>
         </CardContainer>
-    )
+    );
 }
